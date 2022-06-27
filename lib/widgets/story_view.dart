@@ -403,6 +403,7 @@ class StoryView extends StatefulWidget {
   final StoryController controller;
 
   final Color? indicatorColor;
+  final Color? indicatorBackColor;
 
   StoryView({
     required this.storyItems,
@@ -414,6 +415,7 @@ class StoryView extends StatefulWidget {
     this.inline = false,
     this.onVerticalSwipeComplete,
     this.indicatorColor,
+    this.indicatorBackColor,
   });
 
   @override
@@ -630,6 +632,7 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
                   key: UniqueKey(),
                   indicatorHeight: widget.inline ? IndicatorHeight.small : IndicatorHeight.large,
                   indicatorColor: widget.indicatorColor,
+                  indicatorBackColor: widget.indicatorBackColor,
                 ),
               ),
             ),
@@ -716,6 +719,7 @@ class PageBar extends StatefulWidget {
   final Animation<double>? animation;
   final IndicatorHeight indicatorHeight;
   final Color? indicatorColor;
+  final Color? indicatorBackColor;
 
   PageBar(
     this.pages,
@@ -723,6 +727,7 @@ class PageBar extends StatefulWidget {
     this.indicatorHeight = IndicatorHeight.large,
     Key? key,
     this.indicatorColor,
+    this.indicatorBackColor,
   }) : super(key: key);
 
   @override
@@ -768,6 +773,7 @@ class PageBarState extends State<PageBar> {
               isPlaying(it) ? widget.animation!.value : (it.shown ? 1 : 0),
               indicatorHeight: widget.indicatorHeight == IndicatorHeight.large ? 5 : 3,
               indicatorColor: widget.indicatorColor,
+              indicatorBackColor: widget.indicatorBackColor,
             ),
           ),
         );
@@ -783,11 +789,13 @@ class StoryProgressIndicator extends StatelessWidget {
   final double value;
   final double indicatorHeight;
   final Color? indicatorColor;
+  final Color? indicatorBackColor;
 
   StoryProgressIndicator(
     this.value, {
     this.indicatorHeight = 5,
     this.indicatorColor,
+    this.indicatorBackColor,
   });
 
   @override
@@ -801,7 +809,7 @@ class StoryProgressIndicator extends StatelessWidget {
         this.value,
       ),
       painter: IndicatorOval(
-        indicatorColor == null ? Colors.white.withOpacity(0.4) : indicatorColor!.withOpacity(0.4),
+        indicatorBackColor == null ? Colors.white.withOpacity(0.4) : indicatorColor!.withOpacity(0.4),
         1.0,
       ),
     );
