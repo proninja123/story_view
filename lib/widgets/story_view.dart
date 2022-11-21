@@ -585,7 +585,7 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
 
       previous.shown = false;
 
-      widget.onStoryChange?.call(storyItem);
+      widget.onStoryChange?.call(previous);
 
       _beginPlay();
     }
@@ -601,7 +601,7 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
 
       if (_last != null) {
         _last.shown = true;
-        widget.onStoryChange?.call(storyItem);
+        widget.onStoryChange?.call(_last);
         if (_last != widget.storyItems.last) {
           _beginPlay();
         }
