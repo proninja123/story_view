@@ -1,4 +1,6 @@
 import 'package:rxdart/rxdart.dart';
+import 'dart:async';
+import '../story_view.dart';
 
 enum PlaybackState { pause, play, next, previous }
 
@@ -10,6 +12,10 @@ enum PlaybackState { pause, play, next, previous }
 class StoryController {
   /// Stream that broadcasts the playback state of the stories.
   final playbackNotifier = BehaviorSubject<PlaybackState>();
+
+  final onPageChangeController = StreamController.broadcast<StoryItem?>();
+
+  Stream<StoryItem?>get onPageChange => onPageChangeController.stream;
 
   /// Notify listeners with a [PlaybackState.pause] state
   void pause() {
@@ -33,5 +39,6 @@ class StoryController {
   /// the notifier stream.
   void dispose() {
     playbackNotifier.close();
+    onPageChange.close();
   }
 }

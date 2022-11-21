@@ -397,6 +397,9 @@ class StoryView extends StatefulWidget {
   /// Callback for when a story is currently being shown.
   final ValueChanged<StoryItem>? onStoryShow;
 
+  /// Callback for when a story is changed.
+  final ValueChanged<StoryItem>? onStoryChange;
+
   /// Where the progress indicator should be placed.
   final ProgressPosition progressPosition;
 
@@ -419,6 +422,7 @@ class StoryView extends StatefulWidget {
     required this.controller,
     this.onComplete,
     this.onStoryShow,
+    this.onStoryChange,
     this.progressPosition = ProgressPosition.top,
     this.repeat = false,
     this.inline = false,
@@ -530,6 +534,8 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
     _animationController!.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         storyItem.shown = true;
+        widget.controller.onPageChangeController.add(storyItem);
+        widget.onStoryChange?.call(storyItem);
         if (widget.storyItems.last != storyItem) {
           _beginPlay();
         } else {
@@ -580,8 +586,12 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
 
       previous.shown = false;
 
+      widget.controller.onPageChangeController.add(previous);
+      widget.onStoryChange?.call(storyItem);
+
       _beginPlay();
     }
+
   }
 
   void _goForward() {
@@ -593,6 +603,8 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
 
       if (_last != null) {
         _last.shown = true;
+        widget.controller.onPageChangeController.add(_last);
+        widget.onStoryChange?.call(storyItem);
         if (_last != widget.storyItems.last) {
           _beginPlay();
         }
