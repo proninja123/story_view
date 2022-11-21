@@ -534,7 +534,6 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
     _animationController!.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         storyItem.shown = true;
-        widget.controller.onPageChangeController.add(storyItem);
         widget.onStoryChange?.call(storyItem);
         if (widget.storyItems.last != storyItem) {
           _beginPlay();
@@ -586,7 +585,6 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
 
       previous.shown = false;
 
-      widget.controller.onPageChangeController.add(previous);
       widget.onStoryChange?.call(storyItem);
 
       _beginPlay();
@@ -603,7 +601,6 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
 
       if (_last != null) {
         _last.shown = true;
-        widget.controller.onPageChangeController.add(_last);
         widget.onStoryChange?.call(storyItem);
         if (_last != widget.storyItems.last) {
           _beginPlay();
